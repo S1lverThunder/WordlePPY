@@ -1,7 +1,7 @@
 //Daniel Cáceres
 //Variables globales
 let intentos = 6;
-const diccionario = ['APPLE', 'HURLS', 'WINGS', 'YOUTH']
+const diccionario = ['APPLE', 'HURLS', 'WINGS', 'YOUTH', 'ABOUT', 'AGAIN', 'AMONG', 'GUARD', 'PRIDE', 'RADIO', 'PAINT', 'MOVIE', 'QUICK', 'RIVER', 'SUGAR', 'VOICE'];
 const palabra = diccionario[Math.floor(Math.random() * diccionario.length)];
 
 //Constantes del DOM
@@ -12,7 +12,7 @@ const CONTENEDOR = document.getElementById('guesses');
 
 //funcion a ejecutar al iniciar la ventana
 function init(){
-    console.log('Esto se ejecuta solo cuando se carga la pagina web')
+    console.log('Esto se ejecuta solo cuando se carga la pagina web');
 }
 window.addEventListener('load', init)
 
@@ -42,19 +42,19 @@ function intentar(INTENTO){
 	        SPAN.style.backgroundColor = 'yellow';
 	    } else {      //GRIS
 	        SPAN.innerHTML = intento[i];
-	        SPAN.style.backgroundColor = 'grey';
+	        SPAN.style.backgroundColor = 'grey'; //AMARILLO
 		}
 
 		ROW.appendChild(SPAN);
 		GRID.appendChild(ROW);
 	}
 	if (INTENTO === palabra ){
-        terminar("<h1>GANASTE!😀</h1>")
+        terminar("<h1>GANASTE!😀</h1>");
         return;
     }
 	intentos--
     if (intentos==0){
-        terminar("<h1>PERDISTE!😖</h1>")
+        terminar("<h1>PERDISTE!😖</h1><h1>LA PALABRA ERA: "+palabra+"</h1>");
     }
 }
 
