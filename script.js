@@ -17,7 +17,15 @@ function init(){
 window.addEventListener('load', init)
 
 BUTTON.addEventListener("click", comprobarLetras);
+
 function comprobarLetras(){
+	if (intentos == 0){
+		BUTTON.innerHTML = "Intentar";
+		GRID.innerHTML = "";
+		intentos = 6;
+		INPUT.disabled = false;
+		return
+	}
 	CONTENEDOR.innerHTML = "";
 	const INTENTO = leerIntento();
 	if (INTENTO.length == 5){
@@ -26,6 +34,14 @@ function comprobarLetras(){
 	else{
 		CONTENEDOR.innerHTML = "<h1>LA PALABRA DEBE SER DE 5 LETRAS!</h1>";
 	}
+	INPUT.value = "";
+
+}
+
+function leerIntento(){
+    var intento = INPUT.value;
+    var intento = intento.toUpperCase(); 
+    return intento;
 }
 
 function intentar(INTENTO){
@@ -34,14 +50,14 @@ function intentar(INTENTO){
     for (let i in palabra){
     	const SPAN = document.createElement('span');
 		SPAN.className = 'letter';
-	    if (intento[i]===palabra[i]){ //VERDE
-	        SPAN.innerHTML = intento[i];
+	    if (INTENTO[i]===palabra[i]){ //VERDE
+	        SPAN.innerHTML = INTENTO[i];
 	        SPAN.style.backgroundColor = 'green';
-	    } else if( palabra.includes(intento[i]) ) { //AMARILLO
-	        SPAN.innerHTML = intento[i];
+	    } else if( palabra.includes(INTENTO[i]) ) { //AMARILLO
+	        SPAN.innerHTML = INTENTO[i];
 	        SPAN.style.backgroundColor = 'yellow';
 	    } else {      //GRIS
-	        SPAN.innerHTML = intento[i];
+	        SPAN.innerHTML = INTENTO[i];
 	        SPAN.style.backgroundColor = 'grey'; //AMARILLO
 		}
 
@@ -58,13 +74,8 @@ function intentar(INTENTO){
     }
 }
 
-function leerIntento(){
-    intento = INPUT.value;
-    intento = intento.toUpperCase(); 
-    return intento;
-}
 function terminar(mensaje){
     INPUT.disabled = true;
-    BUTTON.disabled = true;
+   	BUTTON.innerHTML = "Reintentar";
     CONTENEDOR.innerHTML = mensaje;
 }
