@@ -1,13 +1,15 @@
 //Daniel Cáceres
 //Variables globales
-let intentos = 0;
+let intentos = 6;
 const API = "https://random-word-api.herokuapp.com/word?length=5&lang=es";
 let palabra = "APPLE";
+palabra = palabraRandom();
 
 function palabraRandom(){
 	fetch(API).then((e) => {
 		e.json().then((word) => {
 			palabra = word[0].toUpperCase();
+			cargando = false;
 			return palabra;
 		});
 	});
@@ -87,6 +89,7 @@ function intentar(INTENTO){
         return;
     }
 	intentos--
+	console.log(intentos);
     if (intentos==0){
         terminar("<h1>PERDISTE!😖</h1><h1>LA PALABRA ERA: "+palabra+"</h1>");
     }
