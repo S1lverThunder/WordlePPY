@@ -1,8 +1,17 @@
 //Daniel Cáceres
 //Variables globales
-let intentos = 6;
-const diccionario = ['APPLE', 'HURLS', 'WINGS', 'YOUTH', 'ABOUT', 'AGAIN', 'AMONG', 'GUARD', 'PRIDE', 'RADIO', 'PAINT', 'MOVIE', 'QUICK', 'RIVER', 'SUGAR', 'VOICE'];
-const palabra = diccionario[Math.floor(Math.random() * diccionario.length)];
+let intentos = 0;
+const API = "https://random-word-api.herokuapp.com/word?length=5&lang=es";
+let palabra = "APPLE";
+
+function palabraRandom(){
+	fetch(API).then((e) => {
+		e.json().then((word) => {
+			palabra = word[0].toUpperCase();
+			return palabra;
+		});
+	});
+}
 
 //Constantes del DOM
 const BUTTON = document.getElementById("guess-button");
@@ -17,14 +26,22 @@ function init(){
 window.addEventListener('load', init)
 
 BUTTON.addEventListener("click", comprobarLetras);
+INPUT.addEventListener("keypress", (e) => {
+	if(e.key === "Enter"){
+		e.preventDefault();
+		comprobarLetras();
+	}
+});
 
 function comprobarLetras(){
 	if (intentos == 0){
+		palabra = palabraRandom();
 		BUTTON.innerHTML = "Intentar";
 		GRID.innerHTML = "";
-		intentos = 6;
+		CONTENEDOR.innerHTML = "";
 		INPUT.disabled = false;
-		return
+		intentos = 6;
+		return;
 	}
 	CONTENEDOR.innerHTML = "";
 	const INTENTO = leerIntento();
@@ -66,12 +83,14 @@ function intentar(INTENTO){
 	}
 	if (INTENTO === palabra ){
         terminar("<h1>GANASTE!😀</h1>");
+        intentos = 0;
         return;
     }
 	intentos--
     if (intentos==0){
         terminar("<h1>PERDISTE!😖</h1><h1>LA PALABRA ERA: "+palabra+"</h1>");
     }
+
 }
 
 function terminar(mensaje){
